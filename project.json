@@ -1,0 +1,10 @@
+{
+  "project": "https://github.com/pschrammel/pgmb-client-golang",
+    
+  "git": "https://github.com/pschrammel/pgmb-client-golang",
+  "path": "pgmb-client-golang",
+  "docker": {
+    "repo": "214587528262.dkr.ecr.eu-west-1.amazonaws.com",
+    "name": "pgmb-client-golang"
+  }
+}
