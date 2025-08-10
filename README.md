@@ -64,4 +64,62 @@ func main() {
     }
 
     // Send a message
-    messages,
+    messages, err := client.Send(ctx, "my_queue", pgmb.SendMessageOptions{
+        Message: []byte("Hello, World!"),
+        Headers: map[string]any{"source": "example"},
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+    log.Printf("Published message with ID: %s", messages[0].ID)
+}
+```
+
+Consumer sample
+
+```go
+package main
+
+import (
+    "context"
+    "log"
+
+    "github.com/pschrammel/pgmb-client-golang"
+)
+
+func main() {
+    ctx := context.Background()
+    
+    // Create client with consumers
+    client, err := pgmb.NewClient(ctx, pgmb.ClientOptions{
+        DSN: "postgres://postgres:password@localhost:5432/mydb?sslmode=disable",
+        Consumers: []pgmb.ConsumerOptions{
+            {
+                Name:      "my_queue",
+                BatchSize: 10,
+                OnMessage: func(ctx context.Context, queueName string, messages []pgmb.Message, ack pgmb.AckFunc) error {
+                    for _, msg := range messages {
+                        log.Printf("Received message: %s", string(msg.Message))
+                        ack(true, msg.ID) // Acknowledge success
+                    }
+                    return nil
+                },
+            },
+        },
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer client.Close()
+
+    // Start listening
+    if err := client.Listen(); err != nil {
+        log.Fatal(err)
+    }
+
+    // Keep running
+    select {}
+}
+```
+

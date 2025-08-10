@@ -33,10 +33,10 @@ WORKDIR /code
 
 # Copy the compiled binary from the builder stage
 COPY --from=builder /code/infra-auditlog-service ./infra-auditlog-service
-COPY bin/start ./start
+#COPY bin/start ./start
 
 # Expose port 8080
 EXPOSE 8080
 
 # Command to run the service
-CMD ["/code/start"]
+#CMD ["/code/start"]
