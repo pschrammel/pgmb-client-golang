@@ -229,7 +229,7 @@ BEGIN
 	-- i.e. 28 bits of randomness. Thus, the max we allow is 2^28/2
 	-- i.e. 0xffffff8, which allows for batch inserts to increment the
 	-- randomness for up to another 2^28/2 messages (more than enough)
-	RETURN (random() * 0xffffff8)::BIGINT;
+	RETURN (random() * x'ffffff8'::BIGINT)::BIGINT;
 END
 $$ LANGUAGE plpgsql VOLATILE PARALLEL SAFE;
 

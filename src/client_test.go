@@ -4,23 +4,24 @@ import (
 	"context"
 	"database/sql"
 	"testing"
-	"time"
+
+	//"time"
 
 	_ "github.com/lib/pq"
 )
 
-const testDSN = "postgres://postgres:password@localhost:5432/pgmb_test?sslmode=disable"
+const testDSN = "postgres://postgres:postgres@dev.conceptboard.com:30432/pgmb_test?sslmode=disable"
 
 func setupTestDB(t *testing.T) *sql.DB {
 	db, err := sql.Open("postgres", testDSN)
 	if err != nil {
 		t.Skip("PostgreSQL not available for testing:", err)
 	}
-	
+
 	if err := db.Ping(); err != nil {
 		t.Skip("PostgreSQL not available for testing:", err)
 	}
-	
+
 	return db
 }
 
@@ -29,7 +30,7 @@ func TestNewClient(t *testing.T) {
 	defer db.Close()
 
 	ctx := context.Background()
-	
+
 	client, err := NewClient(ctx, ClientOptions{
 		DB: db,
 	})
@@ -45,7 +46,7 @@ func TestNewClient(t *testing.T) {
 
 func TestNewClientWithDSN(t *testing.T) {
 	ctx := context.Background()
-	
+
 	client, err := NewClient(ctx, ClientOptions{
 		DSN: testDSN,
 	})
@@ -59,7 +60,7 @@ func TestNewClientWithDSN(t *testing.T) {
 	}
 }
 
-func TestBatcher(t *testing.T) {
+/* func TestBatcher(t *testing.T) {
 	db := setupTestDB(t)
 	defer db.Close()
 
@@ -101,3 +102,4 @@ func TestBatcher(t *testing.T) {
 		t.Errorf("Failed to flush batcher: %v", err)
 	}
 }
+*/

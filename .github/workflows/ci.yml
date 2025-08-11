@@ -50,7 +50,7 @@ jobs:
         echo "PGMB installation would go here"
 
     - name: Run tests
-      run: go test -v ./...
+      run: bin/run_test
       env:
         PGMB_TEST_DSN: postgres://postgres:password@localhost:5432/pgmb_test?sslmode=disable
 
