@@ -14,8 +14,13 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: pgmb_test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_ADMIN_DATABASE: postgres
+          DB_TEST_DATABASE: pgmb_test
+          DB_SSLMODE: disable
         options: >-
           --health-cmd pg_isready
           --health-interval 10s

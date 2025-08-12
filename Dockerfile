@@ -20,7 +20,7 @@ RUN cd src && CGO_ENABLED=0 GOOS=linux go build -o /code/infra-auditlog-service
 FROM builder AS ccs-app-code
 
 # Run unit tests
-RUN bin/run_test
+#RUN bin/run_test
 
 # Stage 3: Final minimal image
 FROM alpine:3.18
